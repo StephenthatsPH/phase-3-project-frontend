@@ -11,7 +11,7 @@ const GamesList = ()=> {
     
 
     const handleDelete = (gamesId) => {
-        fetch(`http://localhost:8000/games/${gamesId}`, 
+        fetch(`http://localhost:9292/games/${gamesId}`, 
         { method: "DELETE" })
             .then(() => {
                 setRefresh(true);
@@ -21,7 +21,7 @@ const GamesList = ()=> {
 
     useEffect(() => {
         if(refresh){
-            fetch('http://localhost:8000/games')
+            fetch('http://localhost:9292/games')
                 .then(res => {
                     if(!res.ok) {
                         throw Error('Could not fetch the data')

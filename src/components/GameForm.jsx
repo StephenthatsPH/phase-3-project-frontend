@@ -11,12 +11,12 @@ function Form() {
 
     useEffect(() => {
     if(product) {
-    fetch('http://localhost:8000/product', {
+    fetch('http://localhost:9292/product', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(product)
     }).then(() =>{
-        console.log("new product added");
+        console.log("new game added");
         
         setIsPending(false);
         setProduct(null);
