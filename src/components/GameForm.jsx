@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function Form() {
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState('');
     const [publisher, setPublisher] = useState('');
-    const [platform, setPlatform] = useState("tree");
+    const [platform, setPlatform] = useState('');
     const [isPending, setIsPending] = useState(false);
     const [games, setGames] = useState(null);
     const history= useHistory();
@@ -20,7 +20,7 @@ function Form() {
         
         setIsPending(false);
         setGames(null);
-        history.push('/games')
+        history.push('/gameslist')
     });
 }
 },[games])
@@ -51,7 +51,7 @@ function Form() {
                 <input
                 required
                 type="text" 
-                placeholder="Enter Developer"
+                placeholder="Enter Publisher"
                 value={publisher}
                 onChange={(e) => setPublisher(e.target.value)} 
                 />
