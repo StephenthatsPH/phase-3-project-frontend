@@ -14,7 +14,7 @@ function Form() {
     fetch('http://localhost:9292/games', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(games)
+        body: JSON.stringify({games})
     }).then(() =>{
         console.log("new game added");
         
@@ -30,7 +30,7 @@ function Form() {
         //const games = (gameTitle, gamePublisher, gamePlatform);
 
         setIsPending(true)
-        setGames({title, publisher, platform})
+        setGames([{title, publisher, platform}])
     }
 
     return (
