@@ -6,31 +6,31 @@ function Form() {
     const [publisher, setPublisher] = useState('');
     const [platform, setPlatform] = useState("tree");
     const [isPending, setIsPending] = useState(false);
-    const [product, setProduct] = useState(null);
+    const [games, setGames] = useState(null);
     const history= useHistory();
 
     useEffect(() => {
-    if(product) {
-    fetch('http://localhost:9292/product', {
+    if(games) {
+    fetch('http://localhost:9292/games', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(product)
+        body: JSON.stringify(games)
     }).then(() =>{
         console.log("new game added");
         
         setIsPending(false);
-        setProduct(null);
+        setGames(null);
         history.push('/games')
     });
 }
-},[product])
+},[games])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         //const games = (gameTitle, gamePublisher, gamePlatform);
 
         setIsPending(true)
-        setProduct({title, publisher, platform})
+        setGames({title, publisher, platform})
     }
 
     return (
@@ -51,7 +51,7 @@ function Form() {
                 <input
                 required
                 type="text" 
-                placeholder="Enter Company"
+                placeholder="Enter Developer"
                 value={publisher}
                 onChange={(e) => setPublisher(e.target.value)} 
                 />

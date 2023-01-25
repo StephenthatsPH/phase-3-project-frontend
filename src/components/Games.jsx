@@ -1,14 +1,14 @@
-function Games({ game, handleDelete }) {
+function Games({ games, handleDelete }) {
 
     
     return (
         <div>
-            {game.map((game) => (
+            {games.map((game) => (
                 <div className="game-preview" key={game.id}>
                     <h6 hidden>{ game.id }</h6>
-                    <h2>{ game.name }</h2>
-                    <p>Type: { game.platform }</p>
-                    <p>${ game.price }</p>
+                    <h2>{ game.title }</h2>
+                    <p>Platform: { game.platform }</p>
+                    <p>Publisher: { game.publisher }</p>
                     <button onClick={() => handleDelete(game.id)}>Delete</button>
                 </div>
             ))}
