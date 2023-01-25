@@ -6,31 +6,33 @@ function Form() {
     const [publisher, setPublisher] = useState('');
     const [platform, setPlatform] = useState('');
     const [isPending, setIsPending] = useState(false);
-    const [games, setGames] = useState(null);
+    const [game, setGame] = useState(null);
     const history= useHistory();
 
     useEffect(() => {
-    if(games) {
+    if(game) {
+        const json = JSON.stringify({game})
+        console.log(json)
     fetch('http://localhost:9292/games', {
         method: 'POST',
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({games})
+        body: JSON.stringify({game})
     }).then(() =>{
         console.log("new game added");
         
         setIsPending(false);
-        setGames(null);
+        setGame(null);
         history.push('/gameslist')
     });
 }
-},[games])
+},[game])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         //const games = (gameTitle, gamePublisher, gamePlatform);
 
         setIsPending(true)
-        setGames([{title, publisher, platform}])
+        setGame([{title, publisher, platform}])
     }
 
     return (
@@ -59,11 +61,12 @@ function Form() {
                 <label>Platform</label>
                 <br/>
                 <select onChange={(e) => setPlatform(e.target.value)}>
-                    <option value="playstation">Playstation</option>
-                    <option value="xbox">Xbox</option>
-                    <option value="pc">PC</option>
-                    <option value="nintendo">Nintendo</option>
-                    <option value="other">Other</option>
+                    <option value="" disabled selected hidden>Select Platform</option>
+                    <option value="Playstation">Playstation</option>
+                    <option value="Xbox">Xbox</option>
+                    <option value="PC">PC</option>
+                    <option value="Nintendo Switch">Nintendo Switch</option>
+                    <option value="Other">Other</option>
                 </select>
                 {!isPending && <button>Submit</button>}
                 {isPending && <button disabled>Adding Game...</button>}
