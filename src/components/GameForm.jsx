@@ -65,7 +65,7 @@ function Form() {
                     <option value="Playstation">Playstation</option>
                     <option value="Xbox">Xbox</option>
                     <option value="PC">PC</option>
-                    <option value="Nintendo Switch">Nintendo Switch</option>
+                    <option value="Nintendo">Nintendo</option>
                     <option value="Other">Other</option>
                 </select>
                 {!isPending && <button>Submit</button>}

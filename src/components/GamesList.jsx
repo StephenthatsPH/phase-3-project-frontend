@@ -21,7 +21,7 @@ const GamesList = () => {
             })
     }
 
-    function updateGame(id) {
+    /*function updateGame(id) {
         fetch(`http://localhost:9292/games/${id}`, {
             method: 'PATCH',
             headers: {
@@ -34,9 +34,9 @@ const GamesList = () => {
                 setGames();
             })
         })
-    }
+    }*/
 
-    /*const updateGame = (gamesId) => {
+    const updateGame = (gamesId) => {
         fetch(`http://localhost:9292/games/${gamesId}`, {
             method: "PATCH",
             headers: {
@@ -48,7 +48,7 @@ const GamesList = () => {
             .then((
                 setGames()
             ))
-    }*/
+    }
 
     useEffect(() => {
         if (refresh) {
@@ -114,7 +114,7 @@ const GamesList = () => {
                         <option value="Playstation">Playstation</option>
                         <option value="Xbox">Xbox</option>
                         <option value="PC">PC</option>
-                        <option value="Nintendo Switch">Nintendo Switch</option>
+                        <option value="Nintendo">Nintendo</option>
                         <option value="Other">Other</option>
                     </select> <br />
                     <button onClick={updateGame}>Update Game</button>
