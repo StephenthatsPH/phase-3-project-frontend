@@ -21,15 +21,34 @@ const GamesList = () => {
             })
     }
 
-    const handleUpdate = (gamesId) => {
-        fetch(`http://localhost:9292/games/${gamesId}`, {
+    function updateGame(id) {
+        fetch(`http://localhost:9292/games/${id}`, {
             method: 'PATCH',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ games })
-        }).then(() => {
-            console.log("game updated");
-        });
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(games)
+        })
+            .then((r) => { r.json().then((setGames()))
+            r.json().then((r) => {
+                setGames();
+            })
+        })
     }
+
+    /*const updateGame = (gamesId) => {
+        fetch(`http://localhost:9292/games/${gamesId}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ games }),
+        })
+            .then((r) => r.json())
+            .then((
+                setGames()
+            ))
+    }*/
 
     useEffect(() => {
         if (refresh) {
@@ -41,7 +60,6 @@ const GamesList = () => {
                     return res.json();
                 })
                 .then(data => {
-                    console.log(data)
                     setGames(data);
                     setTitle(data.title);
                     setPlatform(data.platform);
@@ -88,17 +106,19 @@ const GamesList = () => {
                 <option>Other</option>
             </select>
             <div className="update-form" style={{ float: "right" }}>
-                <input type="text" value={title} /> <br />
-                <input type="text" value={publisher} /> <br />
-                <select value={platform}>
-                    <option value="" disabled selected hidden>Select Platform</option>
-                    <option value="Playstation">Playstation</option>
-                    <option value="Xbox">Xbox</option>
-                    <option value="PC">PC</option>
-                    <option value="Nintendo Switch">Nintendo Switch</option>
-                    <option value="Other">Other</option>
-                </select> <br />
-                <button>Update Game</button>
+                <form>
+                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> <br />
+                    <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> <br />
+                    <select value={platform} onChange={(e) => setPlatform(e.target.value)} >
+                        <option value="" disabled selected hidden>Select Platform</option>
+                        <option value="Playstation">Playstation</option>
+                        <option value="Xbox">Xbox</option>
+                        <option value="PC">PC</option>
+                        <option value="Nintendo Switch">Nintendo Switch</option>
+                        <option value="Other">Other</option>
+                    </select> <br />
+                    <button onClick={updateGame}>Update Game</button>
+                </form>
             </div>
             {error && <div>{error}</div>}
             {isPending && <div>Loading...</div>}
