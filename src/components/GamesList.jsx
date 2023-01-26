@@ -62,11 +62,13 @@ const GamesList = () => {
     }
 
     function selectGame(id) {
-        console.warn(games[id - 3])
-        let item = games.id
-        setTitle(item.title);
-        setPlatform(item.platform);
-        setPublisher(item.publisher);
+        let found = games.filter(g => g.id === id)
+        if (found.length > 0) {
+            let item = found[0]
+            setTitle(item.title);
+            setPlatform(item.platform);
+            setPublisher(item.publisher);
+        };
 
     }
 

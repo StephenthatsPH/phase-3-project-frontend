@@ -3,18 +3,18 @@ import React, { useState } from "react";
 function Games({ games, handleDelete, selectGame }) {
 
     return (
-        <div>
+        <>
             {games.map((game) => (
-                <tbody className="game-preview" key={game.id}>
-                    <tr hidden>{game.id}</tr>
-                    <td>Title: {game.title}</td>
-                    <td>Publisher: {game.publisher}</td>
-                    <td>Platform: {game.platform}</td><br></br>
-                    <td><button onClick={() => selectGame(game.id)}>Update</button></td>
-                    <td><button onClick={() => handleDelete(game.id)}>Delete</button></td>
-                </tbody>
+                <div className="game-preview" key={game.id}>
+                    <span hidden>{game.id}</span>
+                    <span>Title: {game.title}</span>
+                    <span>Publisher: {game.publisher}</span>
+                    <span>Platform: {game.platform}</span><br></br>
+                    <span><button onClick={() => selectGame(game.id)}>Update</button></span>
+                    <span><button onClick={() => handleDelete(game.id)}>Delete</button></span>
+                </div>
             ))}
-        </div>
+        </>
     );
 }
 
