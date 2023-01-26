@@ -1,16 +1,17 @@
-function Games({ games, handleDelete }) {
+import React, { useState } from "react";
 
-    
+function Games({ games, handleDelete, handleUpdate }) {
+
     return (
         <div>
             {games.map((game) => (
                 <div className="game-preview" key={game.id}>
-                    <h6 hidden>{ game.id }</h6>
-                    <h2>{ game.title }</h2>
-                    <p>Publisher: { game.publisher }</p>
-                    <p>Platform: { game.platform }</p>
-                    <button onClick={() => handleDelete(game.id)}>Update</button>
-                    <button onClick={() => handleDelete(game.id)}>Delete</button>
+                    <tr hidden>{game.id}</tr>
+                    <td>Title: {game.title}</td>
+                    <td>Publisher: {game.publisher}</td>
+                    <td>Platform: {game.platform}</td><br></br>
+                    <td><button onClick={() => handleUpdate(game.id)}>Update</button></td>
+                    <td><button onClick={() => handleDelete(game.id)}>Delete</button></td>
                 </div>
             ))}
         </div>

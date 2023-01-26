@@ -10,15 +10,15 @@ function Header() {
     <>
       <header className="App-header">
         <nav className="navbar">
-            <h1>G A M E T R A X</h1>
-            <NavLink exact to="/">Home</NavLink>
-            <NavLink to="/gameslist">  Games</NavLink>
-            <NavLink to="/gameform">  Add Game</NavLink>
+          <h1>G A M E T R A X</h1>
+          <NavLink exact to="/">Home</NavLink>
+          <NavLink to="/gameslist">  Games</NavLink>
+          <NavLink to="/gameform">  Add Game</NavLink>
         </nav>
         <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/gameslist" component={GamesList}/>
-          <Route exact path="/gameform" component={GameForm}/>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/gameslist" component={GamesList} />
+          <Route exact path="/gameform" component={GameForm} />
         </Switch>
       </header>
     </>
