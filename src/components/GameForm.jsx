@@ -64,7 +64,7 @@ function Form() {
                     <option value="" disabled selected hidden>Select Platform</option>
                     <option value="Playstation">Playstation</option>
                     <option value="Xbox">Xbox</option>
-                    <option value="PC">PC</option>
+                    <option value="Pc">PC</option>
                     <option value="Nintendo">Nintendo</option>
                     <option value="Other">Other</option>
                 </select>
