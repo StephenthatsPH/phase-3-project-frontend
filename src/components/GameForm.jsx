@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 function Form() {
     const [title, setTitle] = useState('');
     const [publisher, setPublisher] = useState('');
-    const [platform, setPlatform] = useState('');
+    const [platformId, setPlatformId] = useState('');
     const [isPending, setIsPending] = useState(false);
     const [game, setGame] = useState(null);
     const history = useHistory();
@@ -32,7 +32,7 @@ function Form() {
         //const games = (gameTitle, gamePublisher, gamePlatform);
 
         setIsPending(true)
-        setGame([{ title, publisher, platform }])
+        setGame([{ title, publisher, platformId }])
     }
 
     return (
@@ -60,13 +60,22 @@ function Form() {
                 <br />
                 <label>Platform</label>
                 <br />
-                <select onChange={(e) => setPlatform(e.target.value)}>
+                <select onChange={(e) => setPlatformId(e.target.value)}>
                     <option value="" disabled selected hidden>Select Platform</option>
-                    <option value="Playstation">Playstation</option>
-                    <option value="Xbox">Xbox</option>
-                    <option value="Pc">PC</option>
-                    <option value="Nintendo">Nintendo</option>
-                    <option value="Other">Other</option>
+                    <option value="1">Playstation</option>
+                    <option value="2">Xbox</option>
+                    <option value="3">PC</option>
+                    <option value="4">Switch</option>
+                    <option value="5">Mobile</option>
+                    <option value="6">NES</option>
+                    <option value="7">SNES</option>
+                    <option value="8">N64</option>
+                    <option value="9">Gamecube</option>
+                    <option value="10">Wii</option>
+                    <option value="11">Dreamcast</option>
+                    <option value="12">Steamdeck</option>
+                    <option value="13">Handheld</option>
+                    <option value="14">Other</option>
                 </select>
                 {!isPending && <button>Submit</button>}
                 {isPending && <button disabled>Adding Game...</button>}

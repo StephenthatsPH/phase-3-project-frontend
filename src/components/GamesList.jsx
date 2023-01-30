@@ -5,12 +5,12 @@ const GamesList = () => {
     const [games, setGames] = useState(null);
     const [title, setTitle] = useState("");
     const [publisher, setPublisher] = useState("");
-    const [platform, setPlatform] = useState("");
+    const [platformId, setPlatformId] = useState("");
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
     const [searchChange, setSearchChange] = useState('');
     const [refresh, setRefresh] = useState(true);
-
+    const [specificGame, setSpecificGame] = useState(null);
 
     const handleDelete = (gamesId) => {
         fetch(`http://localhost:9292/games/${gamesId}`,
@@ -36,18 +36,24 @@ const GamesList = () => {
         })
     }*/
 
-    const updateGame = (gamesId) => {
-        fetch(`http://localhost:9292/games/${gamesId}`, {
+    const updateGame = () => {
+        let specificGameId = specificGame.id
+        fetch(`http://localhost:9292/games/${specificGameId}`, {
             method: "PATCH",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({ games }),
+            body: JSON.stringify({
+                title: specificGame.title,
+                publisher: specificGame.publisher,
+                platformId: specificGame.platformId
+            }),
         })
-            .then((r) => r.json())
-            .then((
-                setGames()
-            ))
+            .then(() => {
+                setRefresh(true);
+                console.log('Updated!');
+            })
     }
 
     useEffect(() => {
@@ -62,7 +68,7 @@ const GamesList = () => {
                 .then(data => {
                     setGames(data);
                     setTitle(data.title);
-                    setPlatform(data.platform);
+                    setPlatformId(data.platformId);
                     setPublisher(data.publisher);
                     setIsPending(false);
                     setError(null);
@@ -77,6 +83,14 @@ const GamesList = () => {
 
     function handleSearchChange(event) {
         setSearchChange(event.target.value);
+        let updatedGames = [];
+        const filteredGames = games.find((game) => {
+
+            if (game.title.includes() === searchChange) {
+                return updatedGames.push(game);
+            }
+        })
+        console.log(updatedGames);
     }
 
     function selectGame(id) {
@@ -84,8 +98,9 @@ const GamesList = () => {
         if (found.length > 0) {
             let item = found[0]
             setTitle(item.title);
-            setPlatform(item.platform);
+            setPlatformId(item.platformId);
             setPublisher(item.publisher);
+            setSpecificGame(item);
         };
 
     }
@@ -99,6 +114,7 @@ const GamesList = () => {
             >
             </input>
             <select>
+                <option disabled defaultValue hidden>Platform Filter</option>
                 <option>Playstation</option>
                 <option>Xbox</option>
                 <option>PC</option>
@@ -109,13 +125,22 @@ const GamesList = () => {
                 <form>
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> <br />
                     <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> <br />
-                    <select value={platform} onChange={(e) => setPlatform(e.target.value)} >
-                        <option value="" disabled selected hidden>Select Platform</option>
-                        <option value="Playstation">Playstation</option>
-                        <option value="Xbox">Xbox</option>
-                        <option value="Pc">PC</option>
-                        <option value="Nintendo">Nintendo</option>
-                        <option value="Other">Other</option>
+                    <select value={platformId} onChange={(e) => setPlatformId(e.target.value)} >
+                        <option value="" disabled defaultValue hidden>Select Platform</option>
+                        <option value="1">Playstation</option>
+                        <option value="2">Xbox</option>
+                        <option value="3">PC</option>
+                        <option value="4">Switch</option>
+                        <option value="5">Mobile</option>
+                        <option value="6">NES</option>
+                        <option value="7">SNES</option>
+                        <option value="8">N64</option>
+                        <option value="9">Gamecube</option>
+                        <option value="10">Wii</option>
+                        <option value="11">Dreamcast</option>
+                        <option value="12">Steamdeck</option>
+                        <option value="13">Handheld</option>
+                        <option value="14">Other</option>
                     </select> <br />
                     <button onClick={updateGame}>Update Game</button>
                 </form>
