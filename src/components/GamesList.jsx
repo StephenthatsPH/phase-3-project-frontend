@@ -5,10 +5,9 @@ const GamesList = () => {
     const [games, setGames] = useState(null);
     const [title, setTitle] = useState("");
     const [publisher, setPublisher] = useState("");
-    const [platformId, setPlatformId] = useState("");
+    const [platformName, setPlatformName] = useState("");
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
-    const [searchChange, setSearchChange] = useState('');
     const [refresh, setRefresh] = useState(true);
     const [specificGame, setSpecificGame] = useState(null);
 
@@ -21,37 +20,25 @@ const GamesList = () => {
             })
     }
 
-    /*function updateGame(id) {
-        fetch(`http://localhost:9292/games/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(games)
-        })
-            .then((r) => { r.json().then((setGames()))
-            r.json().then((r) => {
-                setGames();
-            })
-        })
-    }*/
-
     const updateGame = () => {
         let specificGameId = specificGame.id
+        const json = JSON.stringify({ specificGame:{
+            title: specificGame.title,
+            publisher: specificGame.publisher,
+            platform_id: specificGameId
+    }})
+    debugger
+        console.log(specificGame)
         fetch(`http://localhost:9292/games/${specificGameId}`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({
-                title: specificGame.title,
-                publisher: specificGame.publisher,
-                platformId: specificGame.platformId
-            }),
+            body: json
         })
             .then(() => {
-                setRefresh(true);
+                //setRefresh(true);
                 console.log('Updated!');
             })
     }
@@ -66,9 +53,10 @@ const GamesList = () => {
                     return res.json();
                 })
                 .then(data => {
+                    console.log(data)
                     setGames(data);
                     setTitle(data.title);
-                    setPlatformId(data.platformId);
+                    setPlatformName(data.platform);
                     setPublisher(data.publisher);
                     setIsPending(false);
                     setError(null);
@@ -82,15 +70,6 @@ const GamesList = () => {
     }, [refresh]);
 
     function handleSearchChange(event) {
-        setSearchChange(event.target.value);
-        let updatedGames = [];
-        const filteredGames = games.find((game) => {
-
-            if (game.title.includes() === searchChange) {
-                return updatedGames.push(game);
-            }
-        })
-        console.log(updatedGames);
     }
 
     function selectGame(id) {
@@ -98,7 +77,7 @@ const GamesList = () => {
         if (found.length > 0) {
             let item = found[0]
             setTitle(item.title);
-            setPlatformId(item.platformId);
+            setPlatformName(item.platform.name);
             setPublisher(item.publisher);
             setSpecificGame(item);
         };
@@ -125,7 +104,7 @@ const GamesList = () => {
                 <form>
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> <br />
                     <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> <br />
-                    <select value={platformId} onChange={(e) => setPlatformId(e.target.value)} >
+                    <select value={platformName} onChange={(e) => setPlatformName(e.target.value)} >
                         <option value="" disabled defaultValue hidden>Select Platform</option>
                         <option value="1">Playstation</option>
                         <option value="2">Xbox</option>

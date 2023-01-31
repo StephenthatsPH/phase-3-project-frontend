@@ -11,12 +11,17 @@ function Form() {
 
     useEffect(() => {
         if (game) {
-            const json = JSON.stringify({ game })
+            console.log(JSON.stringify(game))
+            const json = JSON.stringify({ game:{
+                title: game.title,
+                publisher: game.publisher,
+                platform_id: game.platformId
+        }})
             console.log(json)
             fetch('http://localhost:9292/games', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ game })
+                body: json
             }).then(() => {
                 console.log("new game added");
 
@@ -32,7 +37,7 @@ function Form() {
         //const games = (gameTitle, gamePublisher, gamePlatform);
 
         setIsPending(true)
-        setGame([{ title, publisher, platformId }])
+        setGame({ title, publisher, platformId })
     }
 
     return (
