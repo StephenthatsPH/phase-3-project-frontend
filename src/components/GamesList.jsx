@@ -11,15 +11,17 @@ const GamesList = () => {
     const [refresh, setRefresh] = useState(true);
     const [specificGame, setSpecificGame] = useState({});
 
-    const handleDelete = (gamesId) => {
-        fetch(`http://localhost:9292/games/${gamesId}`,
+    const handleDelete = (id) => {
+        fetch(`http://localhost:9292/games/${id}`,
             { method: "DELETE" })
             .then(() => {
-                setRefresh(true);
+                    const updatedGames = games.filter((game) => game.id !== id);
+                    console.log(updatedGames);
+                // setRefresh(true);
                 console.log('All done');
+                setGames(updatedGames)
             })
     }
-
 
     const updateGame = () => {
         let specificGameId = specificGame.id
@@ -28,9 +30,6 @@ const GamesList = () => {
             publisher: publisher,
             platform_id: platformId
     }})
-    debugger
-        console.log(json)
-        console.log(specificGame)
         fetch(`http://localhost:9292/games/${specificGameId}`, {
             method: "PATCH",
             headers: {
@@ -39,7 +38,6 @@ const GamesList = () => {
             body: json
         })
             .then((resp) => {
-                //setRefresh(true);
                 console.log(resp);
             })
     }
@@ -54,7 +52,6 @@ const GamesList = () => {
                     return res.json();
                 })
                 .then(data => {
-                    console.log(data)
                     setGames(data);
                     setTitle(data.title);
                     setPlatformId(data.platform);
@@ -68,7 +65,7 @@ const GamesList = () => {
                     setError(err.message);
                 })
         }
-    }, [refresh]);
+    }, []);
 
     function handleSearchChange(event) {
     }
@@ -81,7 +78,6 @@ const GamesList = () => {
             setPlatformId(item.platform_id);
             setPublisher(item.publisher);
             setSpecificGame(item)
-            console.log(item)
         };
 
     }
