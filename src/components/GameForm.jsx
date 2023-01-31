@@ -11,13 +11,11 @@ function Form() {
 
     useEffect(() => {
         if (game) {
-            console.log(JSON.stringify(game))
             const json = JSON.stringify({ game:{
                 title: game.title,
                 publisher: game.publisher,
                 platform_id: game.platformId
         }})
-            console.log(json)
             fetch('http://localhost:9292/games', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },

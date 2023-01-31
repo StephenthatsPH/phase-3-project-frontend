@@ -5,11 +5,11 @@ const GamesList = () => {
     const [games, setGames] = useState(null);
     const [title, setTitle] = useState("");
     const [publisher, setPublisher] = useState("");
-    const [platformName, setPlatformName] = useState("");
+    const [platformId, setPlatformId] = useState("");
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
     const [refresh, setRefresh] = useState(true);
-    const [specificGame, setSpecificGame] = useState(null);
+    const [specificGame, setSpecificGame] = useState({});
 
     const handleDelete = (gamesId) => {
         fetch(`http://localhost:9292/games/${gamesId}`,
@@ -20,26 +20,27 @@ const GamesList = () => {
             })
     }
 
+
     const updateGame = () => {
         let specificGameId = specificGame.id
-        const json = JSON.stringify({ specificGame:{
-            title: specificGame.title,
-            publisher: specificGame.publisher,
-            platform_id: specificGameId
+        let json = JSON.stringify({ game:{
+            title: title,
+            publisher: publisher,
+            platform_id: platformId
     }})
     debugger
+        console.log(json)
         console.log(specificGame)
         fetch(`http://localhost:9292/games/${specificGameId}`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
             },
             body: json
         })
-            .then(() => {
+            .then((resp) => {
                 //setRefresh(true);
-                console.log('Updated!');
+                console.log(resp);
             })
     }
 
@@ -56,7 +57,7 @@ const GamesList = () => {
                     console.log(data)
                     setGames(data);
                     setTitle(data.title);
-                    setPlatformName(data.platform);
+                    setPlatformId(data.platform);
                     setPublisher(data.publisher);
                     setIsPending(false);
                     setError(null);
@@ -77,9 +78,10 @@ const GamesList = () => {
         if (found.length > 0) {
             let item = found[0]
             setTitle(item.title);
-            setPlatformName(item.platform.name);
+            setPlatformId(item.platform_id);
             setPublisher(item.publisher);
-            setSpecificGame(item);
+            setSpecificGame(item)
+            console.log(item)
         };
 
     }
@@ -101,10 +103,10 @@ const GamesList = () => {
                 <option>Other</option>
             </select>
             <div className="update-form" style={{ float: "right" }}>
-                <form>
+                <form onSubmit={updateGame} >
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> <br />
                     <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> <br />
-                    <select value={platformName} onChange={(e) => setPlatformName(e.target.value)} >
+                    <select value={platformId} onChange={(e) => setPlatformId(e.target.value)} >
                         <option value="" disabled defaultValue hidden>Select Platform</option>
                         <option value="1">Playstation</option>
                         <option value="2">Xbox</option>
@@ -121,7 +123,7 @@ const GamesList = () => {
                         <option value="13">Handheld</option>
                         <option value="14">Other</option>
                     </select> <br />
-                    <button onClick={updateGame}>Update Game</button>
+                    <button>Update Game</button>
                 </form>
             </div>
             {error && <div>{error}</div>}
