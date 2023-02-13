@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import PlatformSelect from './PlatformSelect';
 
 function GameForm() {
     const [title, setTitle] = useState('');
@@ -11,11 +12,13 @@ function GameForm() {
 
     useEffect(() => {
         if (game) {
-            const json = JSON.stringify({ game:{
-                title: game.title,
-                publisher: game.publisher,
-                platform_id: game.platformId
-        }})
+            const json = JSON.stringify({
+                game: {
+                    title: game.title,
+                    publisher: game.publisher,
+                    platform_id: game.platformId
+                }
+            })
             fetch('http://localhost:9292/games', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -65,20 +68,7 @@ function GameForm() {
                 <br />
                 <select onChange={(e) => setPlatformId(e.target.value)}>
                     <option value="" disabled selected hidden>Select Platform</option>
-                    <option value="1">Playstation</option>
-                    <option value="2">Xbox</option>
-                    <option value="3">PC</option>
-                    <option value="4">Switch</option>
-                    <option value="5">Mobile</option>
-                    <option value="6">NES</option>
-                    <option value="7">SNES</option>
-                    <option value="8">N64</option>
-                    <option value="9">Gamecube</option>
-                    <option value="10">Wii</option>
-                    <option value="11">Dreamcast</option>
-                    <option value="12">Steamdeck</option>
-                    <option value="13">Handheld</option>
-                    <option value="14">Other</option>
+                    <PlatformSelect />
                 </select>
                 {!isPending && <button>Submit</button>}
                 {isPending && <button disabled>Adding Game...</button>}

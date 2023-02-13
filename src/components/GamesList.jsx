@@ -15,8 +15,8 @@ const GamesList = () => {
         fetch(`http://localhost:9292/games/${id}`,
             { method: "DELETE" })
             .then(() => {
-                    const updatedGames = games.filter((game) => game.id !== id);
-                    console.log(updatedGames);
+                const updatedGames = games.filter((game) => game.id !== id);
+                console.log(updatedGames);
                 console.log('All done');
                 setGames(updatedGames)
             })
@@ -24,11 +24,13 @@ const GamesList = () => {
 
     const updateGame = () => {
         let specificGameId = specificGame.id
-        let json = JSON.stringify({ game:{
-            title: title,
-            publisher: publisher,
-            platform_id: platformId
-    }})
+        let json = JSON.stringify({
+            game: {
+                title: title,
+                publisher: publisher,
+                platform_id: platformId
+            }
+        })
         fetch(`http://localhost:9292/games/${specificGameId}`, {
             method: "PATCH",
             headers: {

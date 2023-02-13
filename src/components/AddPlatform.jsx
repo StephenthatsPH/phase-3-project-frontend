@@ -23,7 +23,7 @@ function AddPlatform() {
 
                 setIsPending(false);
                 setPlatform(null);
-                history.push('/gamesform')
+                history.push('/gameform')
             });
         }
     }, [platform])
