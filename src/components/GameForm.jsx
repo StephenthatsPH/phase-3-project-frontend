@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-function Form() {
+function GameForm() {
     const [title, setTitle] = useState('');
     const [publisher, setPublisher] = useState('');
     const [platformId, setPlatformId] = useState('');
@@ -87,4 +87,4 @@ function Form() {
     );
 }
 
-export default Form;
+export default GameForm;

@@ -17,7 +17,6 @@ const GamesList = () => {
             .then(() => {
                     const updatedGames = games.filter((game) => game.id !== id);
                     console.log(updatedGames);
-                // setRefresh(true);
                 console.log('All done');
                 setGames(updatedGames)
             })
