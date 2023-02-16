@@ -27,7 +27,6 @@ function GameForm({ platforms, onAddGame }) {
                 .then(res => res.json())
                 .then(newGame => onAddGame(newGame))
             console.log("new game added")
-
             setTitle("")
             setPublisher("")
             setPlatform_id("")
@@ -57,7 +56,7 @@ function GameForm({ platforms, onAddGame }) {
                 <input
                     required
                     type="text"
-                    placeholder="Publisher"
+                    placeholder="publisher"
                     value={publisher}
                     onChange={(e) => setPublisher(e.target.value)}
                 />

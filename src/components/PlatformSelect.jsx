@@ -2,7 +2,7 @@ function PlatformSelect({ platforms }) {
 
     return (
         <>
-            {platforms.map((platform) => (<option value={platform.id} >{platform.name}</option>))}
+            {platforms.map((platform) => (<option key={platform.id} value={platform.id} >{platform.name}</option>))}
         </>
     );
 }

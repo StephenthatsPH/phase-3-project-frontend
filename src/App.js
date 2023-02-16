@@ -7,27 +7,15 @@ function App() {
 
   const [platforms, setPlatforms] = useState([])
   const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState(null);
   const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     if (refresh) {
       fetch('http://localhost:9292/platforms')
-        .then(res => {
-          if (!res.ok) {
-            throw Error('Could not fetch the data')
-          }
-          return res.json();
-        })
+        .then((res) => res.json())
         .then(data => {
           setPlatforms(data);
-          setIsPending(false);
-          setError(null);
           setRefresh(false);
-        })
-        .catch(err => {
-          setIsPending(false);
-          setError(err.message);
         })
     }
   }, []);
@@ -91,12 +79,12 @@ function App() {
   return (
     <Router>
       <div className="game-app">
-        <Header
-          platforms={platforms}
-          onGameDelete={handleDeletedGame}
-          onGameEdit={handleEditedGames}
-          onAddPlatform={handleNewPlatform}
-          onAddGame={handleNewGame}
+        <Header 
+        platforms={platforms} 
+        onGameDelete={handleDeletedGame} 
+        onGameEdit={handleEditedGames} 
+        onAddPlatform={handleNewPlatform} 
+        onAddGame={handleNewGame} 
         />
       </div>
     </Router>
