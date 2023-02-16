@@ -1,115 +1,44 @@
-import { useState } from 'react';
-import PlatformCard from './PlatformCard';
-import PlatformSelect from './PlatformSelect';
+import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import GameCard from './GameCard';
 
-const GamesList = ({platforms}) => {
-    const [games, setGames] = useState(null);
-    const [title, setTitle] = useState("");
-    const [publisher, setPublisher] = useState("");
-    const [platformId, setPlatformId] = useState("");
-    const [specificGame, setSpecificGame] = useState({});
-    // const [isPending, setIsPending] = useState(true);
+function GamesList({ platforms, onGameDelete, onGameEdit }) {
+    const [selectedPlatform, setSelectedPlatform] = useState({
+        name: "",
+        games: []
+    });
+    const params = useParams();
 
-    console.log(platforms);
-    const handleDelete = (id) => {
-        fetch(`http://localhost:9292/games/${id}`,
-            { method: "DELETE" })
-            .then(() => {
-                const updatedGames = games.filter((game) => game.id !== id);
-                console.log(updatedGames);
-                console.log('All done');
-                setGames(updatedGames)
-            })
-    }
+    useEffect(() => {
+        const selectedPlatform = platforms.find((platform) => platform.id === parseInt(params.id))
+        if (selectedPlatform) {
+            setSelectedPlatform(selectedPlatform)
+        }
+    }, [platforms, params.id]);
 
-    const updateGame = () => {
-        let specificGameId = specificGame.id
-        let json = JSON.stringify({
-            game: {
-                title: title,
-                publisher: publisher,
-                platform_id: platformId
-            }
-        })
-        fetch(`http://localhost:9292/games/${specificGameId}`, {
-            method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: json
-        })
-            .then((resp) => {
-                console.log(resp);
-            })
-    }
-
-    // useEffect(() => {
-    //     if (refresh) {
-    //         fetch('http://localhost:9292/games')
-    //             .then(res => {
-    //                 if (!res.ok) {
-    //                     throw Error('Could not fetch the data')
-    //                 }
-    //                 return res.json();
-    //             })
-    //             .then(data => {
-    //                 setGames(data);
-    //                 setTitle(data.title);
-    //                 setPlatformId(data.platform);
-    //                 setPublisher(data.publisher);
-    //                 setIsPending(false);
-    //                 setError(null);
-    //                 setRefresh(false);
-    //             })
-    //             .catch(err => {
-    //                 setIsPending(false);
-    //                 setError(err.message);
-    //             })
-    //     }
-    // }, []);
-
-    function handleSearchChange(event) {
-    }
-
-    function selectGame(id) {
-        let found = games.filter(g => g.id === id)
-        if (found.length > 0) {
-            let item = found[0]
-            setTitle(item.title);
-            setPlatformId(item.platform_id);
-            setPublisher(item.publisher);
-            setSpecificGame(item)
-        };
-
-    }
+    const getGames = selectedPlatform.games.map((game) => {
+        return <div className="games-preview">
+            <GameCard id={game.id}
+                title={game.title}
+                publisher={game.publisher}
+                platform={game.platform_id}
+                onGameDelete={onGameDelete}
+                onGameEdit={onGameEdit}
+                game={game}
+            />
+        </div>
+    })
 
     return (
         <div>
-            <input
-                type="text"
-                placeholder="Search"
-                onChange={handleSearchChange}
-            >
-            </input>
-            <select>
-                <option disabled defaultValue hidden>Platform Filter</option>
-                <PlatformSelect platforms={ platforms } />
-            </select>
-            <div className="update-form" style={{ float: "right" }}>
-                <form onSubmit={updateGame} >
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> <br />
-                    <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> <br />
-                    <select value={platformId} onChange={(e) => setPlatformId(e.target.value)} >
-                        <option value="" disabled defaultValue hidden>Select Platform</option>
-                        <PlatformSelect platforms={ platforms } />
-                    </select> <br />
-                    <button>Update Game</button>
-                </form>
-            </div>
-            {/* {pending && <div>Loading...</div>} */}
-            {games && <PlatformCard platforms={platforms} handleDelete={handleDelete} selectGame={selectGame} />}
+            <h1>
+                {selectedPlatform.name} Games:
+            </h1>
+            <ul>
+                {getGames}
+            </ul>
         </div>
-    );
-};
+    )
+}
 
 export default GamesList;

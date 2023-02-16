@@ -1,21 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import EditGame from "./EditGame";
 
-function GamesCard({ platforms, handleDelete, selectGame }) {
-    
+function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit, game }) {
+    const [isEditing, setEditing] = useState(false);
+
+    let deletedGame = { game }
+
+    function handleDeleteClick(e) {
+        fetch(`http://localhost:9292/games/${id}`, {
+            method: "DELETE"
+        })
+            .then(onGameDelete(deletedGame))
+    }
+
+    function handleUpdateGame(updatedGame) {
+        setEditing(false);
+        onGameEdit(updatedGame);
+    }
+
     return (
-        <>
-            {platforms.games.map((game) => (
-                <div className="game-preview" key={game.id}>
-                    <span hidden>{game.id}</span>
-                    <span>Title: {game.title}</span>
-                    <span>Publisher: {game.publisher}</span>
-                    <span>Platform: {game.platform.name}</span><br></br>
-                    <span><button onClick={() => selectGame(game.id)}>Update</button></span>
-                    <span><button onClick={() => handleDelete(game.id)}>Delete</button></span>
+        <li>
+            {isEditing ? (
+                <EditGame
+                    id={id}
+                    title={title}
+                    publisher={publisher}
+                    platform={platform_id}
+                    onGameEdit={handleUpdateGame}
+                />
+            ) : (
+                <div>
+                    <h1>{title}</h1>
+                    <p>{publisher}</p>
+                    <p hidden>{platform_id} </p>
+                    <button onClick={() => setEditing((isEditing) => !isEditing)}>
+                        <span role="img" aria-label="edit">
+                            📝EDIT
+                        </span>
+                    </button>
+                    <button onClick={handleDeleteClick}>
+                        <span role="img" aria-label="delete">
+                            ❌DELETE
+                        </span>
+                    </button>
                 </div>
-            ))}
-        </>
+            )}
+        </li>
     );
 }
 
-export default GamesCard;
+export default GameCard;
