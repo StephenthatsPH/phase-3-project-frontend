@@ -91,7 +91,13 @@ function App() {
   return (
     <Router>
       <div className="game-app">
-        <Header platforms={platforms} onGameDelete={handleDeletedGame} onGameEdit={handleEditedGames} onAddPlatform={handleNewPlatform} onAddGame={handleNewGame} />
+        <Header
+          platforms={platforms}
+          onGameDelete={handleDeletedGame}
+          onGameEdit={handleEditedGames}
+          onAddPlatform={handleNewPlatform}
+          onAddGame={handleNewGame}
+        />
       </div>
     </Router>
   );

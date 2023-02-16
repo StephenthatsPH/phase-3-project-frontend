@@ -31,8 +31,8 @@ function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit,
                 />
             ) : (
                 <div>
-                    <h1>{title}</h1>
-                    <p>{publisher}</p>
+                    <h2>{title}</h2>
+                    <h3>{publisher}</h3>
                     <p hidden>{platform_id} </p>
                     <button onClick={() => setEditing((isEditing) => !isEditing)}>
                         <span role="img" aria-label="edit">

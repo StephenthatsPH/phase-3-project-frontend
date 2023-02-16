@@ -17,7 +17,7 @@ function GamesList({ platforms, onGameDelete, onGameEdit }) {
     }, [platforms, params.id]);
 
     const getGames = selectedPlatform.games.map((game) => {
-        return <div className="games-preview">
+        return <li className="games-preview">
             <GameCard id={game.id}
                 title={game.title}
                 publisher={game.publisher}
@@ -27,7 +27,7 @@ function GamesList({ platforms, onGameDelete, onGameEdit }) {
                 game={game}
                 platforms={platforms}
             />
-        </div>
+        </li>
     })
 
     return (

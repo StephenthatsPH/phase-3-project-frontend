@@ -45,5 +45,15 @@ games-preview {
 .games-preview h2 {
   font-size: 20px;
   color: #238e13;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
+
+.games-preview h3 {
+  font-size: 18px;
+  color: #000000;
+  margin-bottom: 3px;
+}
+
+ul {
+  list-style-type: none;
+  }
