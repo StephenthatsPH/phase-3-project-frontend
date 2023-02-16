@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import Games from './Games';
+import { useState } from 'react';
+import PlatformCard from './PlatformCard';
+import PlatformSelect from './PlatformSelect';
 
-const GamesList = () => {
+const GamesList = ({platforms}) => {
     const [games, setGames] = useState(null);
     const [title, setTitle] = useState("");
     const [publisher, setPublisher] = useState("");
     const [platformId, setPlatformId] = useState("");
-    const [isPending, setIsPending] = useState(true);
-    const [error, setError] = useState(null);
-    const [refresh, setRefresh] = useState(true);
     const [specificGame, setSpecificGame] = useState({});
+    // const [isPending, setIsPending] = useState(true);
 
+    console.log(platforms);
     const handleDelete = (id) => {
         fetch(`http://localhost:9292/games/${id}`,
             { method: "DELETE" })
@@ -43,30 +43,30 @@ const GamesList = () => {
             })
     }
 
-    useEffect(() => {
-        if (refresh) {
-            fetch('http://localhost:9292/games')
-                .then(res => {
-                    if (!res.ok) {
-                        throw Error('Could not fetch the data')
-                    }
-                    return res.json();
-                })
-                .then(data => {
-                    setGames(data);
-                    setTitle(data.title);
-                    setPlatformId(data.platform);
-                    setPublisher(data.publisher);
-                    setIsPending(false);
-                    setError(null);
-                    setRefresh(false);
-                })
-                .catch(err => {
-                    setIsPending(false);
-                    setError(err.message);
-                })
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (refresh) {
+    //         fetch('http://localhost:9292/games')
+    //             .then(res => {
+    //                 if (!res.ok) {
+    //                     throw Error('Could not fetch the data')
+    //                 }
+    //                 return res.json();
+    //             })
+    //             .then(data => {
+    //                 setGames(data);
+    //                 setTitle(data.title);
+    //                 setPlatformId(data.platform);
+    //                 setPublisher(data.publisher);
+    //                 setIsPending(false);
+    //                 setError(null);
+    //                 setRefresh(false);
+    //             })
+    //             .catch(err => {
+    //                 setIsPending(false);
+    //                 setError(err.message);
+    //             })
+    //     }
+    // }, []);
 
     function handleSearchChange(event) {
     }
@@ -93,11 +93,7 @@ const GamesList = () => {
             </input>
             <select>
                 <option disabled defaultValue hidden>Platform Filter</option>
-                <option>Playstation</option>
-                <option>Xbox</option>
-                <option>PC</option>
-                <option>Nintendo</option>
-                <option>Other</option>
+                <PlatformSelect platforms={ platforms } />
             </select>
             <div className="update-form" style={{ float: "right" }}>
                 <form onSubmit={updateGame} >
@@ -105,27 +101,13 @@ const GamesList = () => {
                     <input type="text" value={publisher} onChange={(e) => setPublisher(e.target.value)} /> <br />
                     <select value={platformId} onChange={(e) => setPlatformId(e.target.value)} >
                         <option value="" disabled defaultValue hidden>Select Platform</option>
-                        <option value="1">Playstation</option>
-                        <option value="2">Xbox</option>
-                        <option value="3">PC</option>
-                        <option value="4">Switch</option>
-                        <option value="5">Mobile</option>
-                        <option value="6">NES</option>
-                        <option value="7">SNES</option>
-                        <option value="8">N64</option>
-                        <option value="9">Gamecube</option>
-                        <option value="10">Wii</option>
-                        <option value="11">Dreamcast</option>
-                        <option value="12">Steamdeck</option>
-                        <option value="13">Handheld</option>
-                        <option value="14">Other</option>
+                        <PlatformSelect platforms={ platforms } />
                     </select> <br />
                     <button>Update Game</button>
                 </form>
             </div>
-            {error && <div>{error}</div>}
-            {isPending && <div>Loading...</div>}
-            {games && <Games games={games} handleDelete={handleDelete} selectGame={selectGame} />}
+            {/* {pending && <div>Loading...</div>} */}
+            {games && <PlatformCard platforms={platforms} handleDelete={handleDelete} selectGame={selectGame} />}
         </div>
     );
 };

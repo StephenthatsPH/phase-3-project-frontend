@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 
 function AddPlatform() {
     const [isPending, setIsPending] = useState(false);
-    const history = useHistory();
     const [platform, setPlatform] = useState(null);
     const [name, setName] = useState('');
+    const history = useHistory();
 
     useEffect(() => {
         if (platform) {

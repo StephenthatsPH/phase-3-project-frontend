@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import PlatformSelect from './PlatformSelect';
 
-function GameForm() {
+function GameForm({ platforms }) {
     const [title, setTitle] = useState('');
     const [publisher, setPublisher] = useState('');
     const [platformId, setPlatformId] = useState('');
@@ -68,7 +68,7 @@ function GameForm() {
                 <br />
                 <select onChange={(e) => setPlatformId(e.target.value)}>
                     <option value="" disabled selected hidden>Select Platform</option>
-                    <PlatformSelect />
+                    <PlatformSelect platforms={ platforms }/>
                 </select>
                 {!isPending && <button>Submit</button>}
                 {isPending && <button disabled>Adding Game...</button>}

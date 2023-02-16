@@ -1,10 +1,10 @@
 import React from "react";
 
-function Games({ games, handleDelete, selectGame }) {
+function GamesCard({ platforms, handleDelete, selectGame }) {
     
     return (
         <>
-            {games.map((game) => (
+            {platforms.games.map((game) => (
                 <div className="game-preview" key={game.id}>
                     <span hidden>{game.id}</span>
                     <span>Title: {game.title}</span>
@@ -18,4 +18,4 @@ function Games({ games, handleDelete, selectGame }) {
     );
 }
 
-export default Games;
+export default GamesCard;
