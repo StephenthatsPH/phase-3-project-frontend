@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EditGame from "./EditGame";
 
-function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit, game }) {
+function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit, game, platforms }) {
     const [isEditing, setEditing] = useState(false);
 
     let deletedGame = { game }
@@ -25,8 +25,9 @@ function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit,
                     id={id}
                     title={title}
                     publisher={publisher}
-                    platform={platform_id}
+                    platform_id={platform_id}
                     onGameEdit={handleUpdateGame}
+                    platforms={platforms}
                 />
             ) : (
                 <div>

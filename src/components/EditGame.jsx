@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import PlatformSelect from "./PlatformSelect";
 
-function EditGame({ id, title, publisher, platform_id, onGameEdit, game }) {
+function EditGame({ id, title, publisher, platform_id, onGameEdit, game, platforms }) {
     const [gameTitle, setGameTitle] = useState(title);
     const [gamePublisher, setGamePublisher] = useState(publisher);
     const [gamePlatform, setGamePlatform] = useState(platform_id);
@@ -37,13 +38,15 @@ function EditGame({ id, title, publisher, platform_id, onGameEdit, game }) {
                 value={gamePublisher}
                 onChange={(e) => setGamePublisher(e.target.value)}
             />
-            <input
+            <select
                 type="text"
                 name="genre"
                 autoComplete="off"
                 value={gamePlatform}
                 onChange={(e) => setGamePlatform(e.target.value)}
-            />
+            >
+                <PlatformSelect platforms={platforms} />
+            </select>
             <button>
                 <input
                     type="submit"

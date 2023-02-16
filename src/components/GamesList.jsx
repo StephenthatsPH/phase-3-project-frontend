@@ -25,6 +25,7 @@ function GamesList({ platforms, onGameDelete, onGameEdit }) {
                 onGameDelete={onGameDelete}
                 onGameEdit={onGameEdit}
                 game={game}
+                platforms={platforms}
             />
         </div>
     })
