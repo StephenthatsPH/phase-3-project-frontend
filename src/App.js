@@ -32,6 +32,7 @@ function App() {
     }
   }, []);
 
+
   function handleNewGame(newGame) {
     const platform = platforms.find((platform) => platform.id === newGame.platform_id)
     const updatedGames = [...platform.games, newGame]

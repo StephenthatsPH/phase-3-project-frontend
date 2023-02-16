@@ -4,7 +4,7 @@ import PlatformSelect from "./PlatformSelect";
 function EditGame({ id, title, publisher, platform_id, onGameEdit, game, platforms }) {
     const [gameTitle, setGameTitle] = useState(title);
     const [gamePublisher, setGamePublisher] = useState(publisher);
-    const [gamePlatform, setGamePlatform] = useState(platform_id);
+    const [gamePlatform_id, setGamePlatform_id] = useState(platform_id);
 
     function handleEditSubmit(e) {
         e.preventDefault();
@@ -14,9 +14,11 @@ function EditGame({ id, title, publisher, platform_id, onGameEdit, game, platfor
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                title: game.title,
-                publisher: game.publisher,
-                platform_id: game.platform_id
+                game: {
+                    title: gameTitle,
+                    publisher: gamePublisher,
+                    platform_id: gamePlatform_id
+                }
             }),
         })
             .then((res) => res.json())
@@ -26,25 +28,25 @@ function EditGame({ id, title, publisher, platform_id, onGameEdit, game, platfor
         <form onSubmit={handleEditSubmit}>
             <input
                 type="text"
-                name="title"
+                placeholder="Title"
                 autoComplete="off"
                 value={gameTitle}
                 onChange={(e) => setGameTitle(e.target.value)}
             />
             <input
                 type="text"
-                name="publisher"
+                placeholder="Publisher"
                 autoComplete="off"
                 value={gamePublisher}
                 onChange={(e) => setGamePublisher(e.target.value)}
             />
             <select
-                type="text"
-                name="genre"
-                autoComplete="off"
-                value={gamePlatform}
-                onChange={(e) => setGamePlatform(e.target.value)}
+                value={gamePlatform_id}
+                onChange={(e) => setGamePlatform_id(e.target.value)}
             >
+                <option value="" disabled defaultValue hidden >
+                    Select Platform
+                </option>
                 <PlatformSelect platforms={platforms} />
             </select>
             <button>

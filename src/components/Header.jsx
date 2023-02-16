@@ -16,13 +16,14 @@ function Header({ platforms, onGameDelete, onGameEdit, onAddPlatform, onAddGame 
           <h1>G A M E T R A X</h1>
           <NavLink exact to="/">Home</NavLink>
           <NavLink to="/platformslist">  Platforms</NavLink>
+          <NavLink to="/newgame"> New Game</NavLink>
           <NavLink to="/platforms/:id" />
         </nav>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/platformslist">
-            <PlatformsList platforms={platforms} />
             <PlatformForm onAddPlatform={onAddPlatform} />
+            <PlatformsList platforms={platforms} />
           </Route>
           <Route exact path="/platforms/:id">
             <GamesList
@@ -30,6 +31,8 @@ function Header({ platforms, onGameDelete, onGameEdit, onAddPlatform, onAddGame 
               onGameDelete={onGameDelete}
               onGameEdit={onGameEdit}
             />
+          </Route>
+          <Route exact path="/newgame">
             <GameForm
               platforms={platforms}
               onAddGame={onAddGame}
