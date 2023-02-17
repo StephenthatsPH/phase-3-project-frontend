@@ -18,10 +18,14 @@ function App() {
           setRefresh(false);
         })
     }
-  }, []);
+  }, [platforms]);
 
+  function handleNewPlatform(newPlatform) {
+    setPlatforms([...platforms, { ...newPlatform, games: [] }])
+  }
 
   function handleNewGame(newGame) {
+    console.log(newGame)
     const platform = platforms.find((platform) => platform.id === newGame.platform_id)
     const updatedGames = [...platform.games, newGame]
     const updatedPlatform = { ...platform, games: updatedGames }
@@ -34,10 +38,6 @@ function App() {
       }
     })
     setPlatforms(updatedPlatforms)
-  }
-
-  function handleNewPlatform(newPlatform) {
-    setPlatforms([...platforms, { ...newPlatform, games: [] }])
   }
 
   function handleDeletedGame(deletedGame) {

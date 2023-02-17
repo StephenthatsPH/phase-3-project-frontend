@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PlatformSelect from "./PlatformSelect";
+import { useHistory } from 'react-router-dom';
 
 function GameForm({ platforms, onAddGame }) {
     const [title, setTitle] = useState("");
     const [publisher, setPublisher] = useState("");
     const [platform_id, setPlatform_id] = useState("");
     const [game, setGame] = useState(null)
+    const history = useHistory();
 
     useEffect(() => {
         if (game) {
@@ -31,6 +33,7 @@ function GameForm({ platforms, onAddGame }) {
             setPublisher("")
             setPlatform_id("")
             setGame(null)
+            history.push(`/platformslist/`)
         }
     }, [game])
 
