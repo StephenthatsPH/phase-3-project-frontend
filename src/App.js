@@ -26,7 +26,9 @@ function App() {
 
   function handleNewGame(newGame) {
     console.log(newGame)
-    const platform = platforms.find((platform) => platform.id === newGame.platform_id)
+    console.log(platforms)
+    const platform = platforms.find((platform) => platform.id == newGame.platform_id) 
+    console.log(platform)
     const updatedGames = [...platform.games, newGame]
     const updatedPlatform = { ...platform, games: updatedGames }
     const updatedPlatforms = platforms.map((obj) => {
@@ -41,7 +43,7 @@ function App() {
   }
 
   function handleDeletedGame(deletedGame) {
-    const platform = platforms.find((platform) => platform.id === deletedGame.game.platform_id)
+    const platform = platforms.find((platform) => platform.id == deletedGame.game.platform_id)
     const updatedGames = platform.games.filter((g) => g.id !== deletedGame.game.id);
     const updatedPlatform = { ...platform, games: updatedGames }
     const updatedPlatforms = platforms.map((obj) => {
@@ -56,7 +58,7 @@ function App() {
   }
 
   function handleEditedGames(updatedGame) {
-    const platform = platforms.find((platform) => platform.id === updatedGame.platform_id)
+    const platform = platforms.find((platform) => platform.id == updatedGame.platform_id)
     const updatedGames = platform.games.map((game) => {
       if (game.id === updatedGame.id) {
         return updatedGame;
