@@ -6,7 +6,7 @@ function PlatformsList({ platforms }) {
     const getPlatforms = platforms.map((platform) => {
         return <div key={platform.id}>
             <h2>{platform.name}</h2>
-            <NavLink to={`/platforms/${platform.id}`}>
+            <NavLink to={`/platforms/${platform.id}/games`}>
                 <p>Games on {platform.name}</p>
             </NavLink>
         </div>

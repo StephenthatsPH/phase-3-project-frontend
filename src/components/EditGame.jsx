@@ -40,15 +40,6 @@ function EditGame({ id, title, publisher, platform_id, onGameEdit, game, platfor
                 value={gamePublisher}
                 onChange={(e) => setGamePublisher(e.target.value)}
             />
-            <select
-                value={gamePlatform_id}
-                onChange={(e) => setGamePlatform_id(e.target.value)}
-            >
-                <option value="" disabled defaultValue hidden >
-                    Select Platform
-                </option>
-                <PlatformSelect platforms={platforms} />
-            </select>
             <button>
                 <input
                     type="submit"
