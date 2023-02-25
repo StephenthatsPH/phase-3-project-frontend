@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EditGame from "./EditGame";
 
 function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit, game, platforms }) {
-    const [isEditing, setEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     let deletedGame = { game }
 
@@ -14,7 +14,7 @@ function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit,
     }
 
     function handleUpdateGame(updatedGame) {
-        setEditing(false);
+        setIsEditing(false);
         onGameEdit(updatedGame);
     }
 
@@ -34,7 +34,7 @@ function GameCard({ id, title, publisher, platform_id, onGameDelete, onGameEdit,
                     <h2>{title}</h2>
                     <h3>{publisher}</h3>
                     <p hidden>{platform_id} </p>
-                    <button onClick={() => setEditing((isEditing) => !isEditing)}>
+                    <button onClick={() => setIsEditing((isEditing) => !isEditing)}>
                         <span role="img" aria-label="edit">
                             📝EDIT
                         </span>
