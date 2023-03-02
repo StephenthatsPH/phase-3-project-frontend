@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PlatformSelect from "./PlatformSelect";
 
 function EditGame({ id, title, publisher, platform_id, onGameEdit, game, platforms }) {
     const [gameTitle, setGameTitle] = useState(title);

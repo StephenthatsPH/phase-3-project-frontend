@@ -6,42 +6,33 @@ function GameForm({ platforms, onAddGame }) {
     const [title, setTitle] = useState("");
     const [publisher, setPublisher] = useState("");
     const [platform_id, setPlatform_id] = useState("");
-    const [game, setGame] = useState(null)
     const history = useHistory();
-
-    useEffect(() => {
-        if (game) {
-            const json = JSON.stringify({
-                game: {
-                    title: game.title,
-                    publisher: game.publisher,
-                    platform_id: game.platform_id
-                }
-            })
-
-            fetch(`http://localhost:9292/games`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: json
-            })
-                .then(res => res.json())
-                .then(newGame => onAddGame(newGame))
-            console.log("new game added")
-            setTitle("")
-            setPublisher("")
-            setPlatform_id("")
-            setGame(null)
-            history.push(`/platformslist/`)
-        }
-    }, [game])
-
 
     function handleSubmit(e) {
         e.preventDefault();
 
-        setGame({ title, publisher, platform_id })
+        const json = JSON.stringify({
+            game: {
+                title: title,
+                publisher: publisher,
+                platform_id: platform_id
+            }
+        })
+
+
+        fetch('http://localhost:9292/games', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: json
+            })
+                .then(res => res.json())
+                .then(newGame => onAddGame(newGame))
+            console.log("new game added");
+            setTitle("")
+            setPublisher("")
+            setPlatform_id("")
+            history.push(`/platformslist/`)
+
     }
 
     return (
